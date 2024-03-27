@@ -2,7 +2,7 @@
 <link rel="stylesheet" type='text/css' href="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/devicon.min.css" />
 <head/>
 
-# Embedded system HW3
+# <i class="devicon-python-plain"></i> Embedded system HW3
 
 - Team member: 林萬荃 周君桓 陳柏睿
 - This is a `python` program with bluepy library in attemp to change the `CCCD` value of a test GATT service on android phone.
@@ -12,7 +12,7 @@
 
 ## How to use & Expected behavior
 
-From the android app you can see the service uuid and the characteristic uuid
+From the <i class="devicon-android-plain colored"></i> android app you can see the service uuid and the characteristic uuid
 
 <img src="screenshots/pic1.jpg" alt="Example Image" style="width:50%;height:50%;">
 
