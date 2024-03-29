@@ -1,10 +1,9 @@
 from bluepy.btle import Peripheral, UUID
 from bluepy.btle import Scanner, DefaultDelegate
 
-test_service_uuid = "0000aaa0-0000-1000-8000-aabbccddeeff"
-test_service_char_uuid = "0000aaa2-0000-1000-8000-aabbccddeeff"
-complete_local_name = "WanchuanPhone"
-
+test_service_uuid = "0000aaa0-0000-1000-8000-aabbccddeeff"          # GATT service UUID
+test_service_char_uuid = "0000aaa2-0000-1000-8000-aabbccddeeff"     # GATT service Characteristic UUID
+complete_local_name = "WanchuanPhone"                               # Complete Local Name of device
 
 class ScanDelegate(DefaultDelegate):
     def __init__(self):
@@ -18,29 +17,38 @@ class ScanDelegate(DefaultDelegate):
 
 
 scanner = Scanner().withDelegate(ScanDelegate())
-devices = scanner.scan(5.0)
+devices = scanner.scan(5.0)                                         # scan device for 5 seconds
 
 n = 0
 target_n = -1
 addr = []
 NotificationFlag = 0
 
+"""
 with open('output.txt', 'w') as file:
     file.write('')
+"""
 
 for dev in devices:
+
+    """
     print("%d: Device %s (%s), RSSI=%d dB" %
           (n, dev.addr, dev.addrType, dev.rssi))
     with open('output.txt', 'a') as file:
         file.write("%d: Device %s (%s), RSSI=%d dB\n" %
                    (n, dev.addr, dev.addrType, dev.rssi))
+    """
 
     addr.append(dev.addr)
     for (adtype, desc, value) in dev.getScanData():
+
+        """
         print(" %s = %s" % (desc, value))
         with open('output.txt', 'a') as file:
             file.write(" %s = %s\n" % (desc, value))
+        """
 
+        # find device by Complete Local Name
         if (desc == "Complete Local Name" and value == complete_local_name):
             print("Found ", complete_local_name)
             target_n = n
@@ -55,34 +63,38 @@ number = target_n
 
 print('Device', number)
 print(addr[number])
-#
+
 print("Connecting...")
 dev = Peripheral(addr[number], 'random')
 
-
-#
 Services = dev.getServices()
+"""
 for svc in Services:
     print(str(svc))
-#
+"""
+
 Chars = dev.getCharacteristics(startHnd=1, endHnd=0xFFFF, uuid=None)
+"""
 for ch in Chars:
     print(str(ch))
-#
+"""
+
+"""
 print("Handle   UUID                                Properties")
 print("-------------------------------------------------------")
 for ch in Chars:
     print("  0x" + format(ch.getHandle(), '02X') + "   " +
           str(ch.uuid) + " " + ch.propertiesToString())
-#
+"""
+
 Descriptors = dev.getDescriptors(startHnd=1, endHnd=0xFFFF)
+"""
 for desc in Descriptors:
     print(str(desc.uuid), str(desc))
+"""
 
-#
 test_service = dev.getServiceByUUID(UUID(test_service_uuid))
-test_char = test_service.getCharacteristics(
-    UUID(test_service_char_uuid))[0]
+test_char = test_service.getCharacteristics(UUID(test_service_char_uuid))[0]
 
 for desriptor in test_char.getDescriptors():
     if (desriptor.uuid == 0x2902):
@@ -95,7 +107,8 @@ for desriptor in test_char.getDescriptors():
 
         print("Before writing to CCCD:", end="")
         print(dev.readCharacteristic(CCCD_handle))
-
+        
+        # set CCCD value
         dev.writeCharacteristic(
             CCCD_handle, bytes([0, 2]), withResponse=True)
 
