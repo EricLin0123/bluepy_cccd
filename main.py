@@ -1,9 +1,9 @@
 from bluepy.btle import Peripheral, UUID
 from bluepy.btle import Scanner, DefaultDelegate
 
-test_service_uuid = "0000aaa0-0000-1000-8000-aabbccddeeff"          # GATT service UUID
-test_service_char_uuid = "0000aaa2-0000-1000-8000-aabbccddeeff"     # GATT service Characteristic UUID
-complete_local_name = "WanchuanPhone"                               # Complete Local Name of device
+test_service_uuid = "Your GATT Service UUID"                        # GATT service UUID
+test_service_char_uuid = "Your GATT Service Characteristic UUID"    # GATT service Characteristic UUID
+complete_local_name = "Your Device's Complete Local Name"           # Complete Local Name of device
 
 class ScanDelegate(DefaultDelegate):
     def __init__(self):

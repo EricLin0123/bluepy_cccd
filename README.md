@@ -5,36 +5,50 @@
 # <i class="devicon-python-plain"></i> Embedded system HW3
 
 - Team member: 林萬荃 周君桓 陳柏睿
-- This is a `python` program with bluepy library in attemp to change the `CCCD` value of a test GATT service on android phone.
+- This is a `python` program with bluepy library in attempt to change the `CCCD` value of a test GATT service on android phone(we use `nRF Connect` android app).
 - The repository contains the following files:
   - README.md
   - main.py
 
 ## How to use & Expected behavior
 
-From the <i class="devicon-android-plain colored"></i> android app you can see the service uuid and the characteristic uuid
+From the <i class="devicon-android-plain colored"></i> android app, we first create an advertiser(which includes the device complete local name)
 
 <img src="screenshots/pic1.jpg" alt="Example Image" style="width:50%;height:50%;">
+
+you can see the service uuid and the characteristic uuid in the `GATT Configuration` page
+
+<img src="screenshots/pic2.jpg" alt="Example Image" style="width:50%;height:50%;">
 
 Write them into the `main.py` line 4 and 5 together with the `complete_local_name` of the device at line 6
 
 ```python
+test_service_uuid = "Your GATT Service UUID"
+test_service_char_uuid = "Your GATT Service Characteristic UUID"
+complete_local_name = "Your Device's Complete Local Name"
+```
+
+For example:
+
+```python
 test_service_uuid = "0000aaa0-0000-1000-8000-aabbccddeeff"
-test_service_char_uuid = "0000aaa2-0000-1000-8000-aabbccddeeff"
-complete_local_name = "WanchuanPhone"
-``````
-and run the program with `sudo` privilege
+test_service_char_uuid = "0000aaa1-0000-1000-8000-aabbccddeeff"
+complete_local_name = "vivo V25 Pro"
+```
+
+In Raspberry Pi, run the program with `sudo` privilege
 
 ```bash
 sudo python3 main.py
 ```
+
 You shoud see the following output, as you can see the `CCCD` value has been changed from `0x0000` to `0x0002` and the service is waiting for notification
 
 <img src="screenshots/before_sent.png" alt="Example Image" style="width:100%;height:100%;">
 
-Send a notification from the android app 
+Send a notification from the android app
 
-<img src="screenshots/pic2.jpg" alt="Example Image" style="width:50%;height:50%;">
+<img src="screenshots/pic3.jpg" alt="Example Image" style="width:50%;height:50%;">
 
 you should see the following output (sent random data 4 times)
 
